@@ -20,7 +20,7 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/etEmail"
+                android:id="@+id/etEmaila"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
@@ -32,7 +32,7 @@
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+id/etPassworda"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ems="10"
