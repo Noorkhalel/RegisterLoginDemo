@@ -33,7 +33,7 @@ public class HomePage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         carList = new ArrayList<>();
-        carAdapter = new CarAdapter(carList);
+//        carAdapter = new CarAdapter(carList);
         recyclerView.setAdapter(carAdapter);
 
         fetchCars();

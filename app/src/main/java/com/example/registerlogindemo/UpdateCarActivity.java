@@ -41,6 +41,7 @@ public class UpdateCarActivity extends AppCompatActivity {
         btnFetchCar = findViewById(R.id.btnFetchCar);
         btnUpdateCar = findViewById(R.id.btnUpdateCar);
 
+
         btnFetchCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

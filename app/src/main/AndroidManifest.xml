@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Car_deitale"
+            android:name=".StartBayActrivity"
             android:exported="false" />
+        <activity android:name=".Car_deitale" />
         <activity
             android:name=".HomePage"
             android:exported="false" />

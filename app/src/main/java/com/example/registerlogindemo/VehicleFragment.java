@@ -23,7 +23,9 @@ public class VehicleFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Car> carList;
+    private static final String ARG_USER_ID = "user_id";
     private CarAdapter adapter;
+    private static String userIda,userId;
 
     public VehicleFragment() {
         // Required empty public constructor
@@ -38,15 +40,30 @@ public class VehicleFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         carList = new ArrayList<>();
-        adapter = new CarAdapter(carList);
+        adapter = new CarAdapter(carList, requireContext()); // or getContext() if you're using an older version of Android
         recyclerView.setAdapter(adapter);
 
-        // Fetch data from PHP backend
+        VehicleFragment fragment = new VehicleFragment();
+        Bundle args = new Bundle();
+        args.putString("USER_ID", userId);
+        fragment.setArguments(args);
+        Bundle argsa = getArguments();
+        if (argsa != null) {
+            String userId = argsa.getString("USER_ID");
+        }
+
         fetchDataFromPHP();
 
         return view;
     }
-
+    public static VehicleFragment newInstance(String userId) {
+        VehicleFragment fragment = new VehicleFragment();
+        Bundle args = new Bundle();
+        userIda = userId;
+        args.putString(ARG_USER_ID, userIda);
+        fragment.setArguments(args);
+        return fragment;
+    }
     private void fetchDataFromPHP() {
         new Thread(() -> {
             try {
@@ -79,7 +96,9 @@ public class VehicleFragment extends Fragment {
                             jsonObject.getString("model"),
                             jsonObject.getString("availableStart"),
                             jsonObject.getString("availableEnd"),
-                            jsonObject.getInt("ownerId")
+                            jsonObject.getInt("ownerId"),
+                            jsonObject.getInt("availability")
+
                     );
                     carList.add(car);
                 }
