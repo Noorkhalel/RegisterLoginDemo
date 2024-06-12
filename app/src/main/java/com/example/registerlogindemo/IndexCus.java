@@ -33,28 +33,35 @@ public class IndexCus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_index_cus);
-        Bundle b = getIntent().getExtras();
+        String userId = getIntent().getStringExtra("USER_ID");
 //        int userId1 = b.getInt("USER_ID");
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String userId = extras.getString("USER_ID");
-        }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            String userId = extras.getString("USER_ID");
+//        }
         // Retrieve user ID from Intent extras
-        String userId = getIntent().getStringExtra("USER_ID");
+//        String userId = getIntent().getStringExtra("USER_ID");
 //        nnn = findViewById(R.id.nnn);
 //        nnn.setText(userId);
         // Initialize AccountFragment with user ID
+
         AccountFragment accountFragment = AccountFragment.newInstance(userId);
-        AccountFragment vehicleFragment = AccountFragment.newInstance(userId);
-        AccountFragment bookingsFragment = AccountFragment.newInstance(userId);
+        VehicleFragment vehicleFragment = VehicleFragment.newInstance(userId);
+        BookingsFragment bookingsFragment = BookingsFragment.newInstance(userId);
 
         // Replace the fragment container with the AccountFragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.framelayout, accountFragment)
-                .replace(R.id.framelayout, vehicleFragment)
                 .replace(R.id.framelayout, bookingsFragment)
                 .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.framelayout, vehicleFragment)
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.framelayout, accountFragment)
+                .commit();
+
 
         initComponents();
         clickListener();

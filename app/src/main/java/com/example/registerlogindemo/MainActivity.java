@@ -17,7 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etEmaila, etPassworda;
     private String emaila, passworda;
     private String URL = "http://10.0.2.2/PHP_Android/login.php";
+    private List<Booking> dummyBookingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         emaila = passworda = "";
         etEmaila = findViewById(R.id.etEmaila);
         etPassworda = findViewById(R.id.etPassworda);
+        dummyBookingList = new ArrayList<>();
+        dummyBookingList.add(new Booking("1", "123", "456", "2024-06-15", "2024-06-20", "5", "$100", "john@example.com", "1234567890", "John Doe"));
+        dummyBookingList.add(new Booking("1", "123", "456", "2024-06-15", "2024-06-20", "5", "$100", "john@example.com", "1234567890", "John Doe"));
     }
 
     public void login(View view) {
@@ -56,8 +62,11 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent;
                             if (userType.equals("customer")) {
                                 intent = new Intent(MainActivity.this, IndexCus.class);
+                                intent.putExtra("UserTyp", "C");
                             } else if (userType.equals("owner")) {
                                 intent = new Intent(MainActivity.this, IndexOwner.class);
+                                intent.putExtra("UserTyp", "O");
+
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid response from server", Toast.LENGTH_SHORT).show();
                                 return;

@@ -2,11 +2,14 @@ package com.example.registerlogindemo;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,45 +22,52 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehicleFragment extends Fragment {
+public class CarOwner extends Fragment {
 
+    private static final String ARG_USER_ID = "user_id";
+    private static final String ARG_USER_TYP = "user_typ";
+    private CarAdapter adapter;
+    private static String userId, usertyp;
     private RecyclerView recyclerView;
     private List<Car> carList;
-    private static final String ARG_USER_ID = "user_id";
-    private CarAdapter adapter;
-    private static String userIda;
 
-    public VehicleFragment() {
+    public CarOwner() {
         // Required empty public constructor
     }
-    public static VehicleFragment newInstance(String userId) {
-        VehicleFragment fragment = new VehicleFragment();
+
+    public static CarOwner newInstance(String userId,String usertyp) {
+        CarOwner fragment = new CarOwner();
         Bundle args = new Bundle();
-        userIda = userId;
-        args.putString(ARG_USER_ID, userIda);
+        args.putString(ARG_USER_ID, userId);
+        args.putString(ARG_USER_TYP, usertyp);
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            userId = getArguments().getString(ARG_USER_ID);
+            usertyp = getArguments().getString(ARG_USER_ID);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
+        View view = inflater.inflate(R.layout.fragment_car_owner, container, false);
 
-        recyclerView = view.findViewById(R.id.recycler_view_vehicle); // Update RecyclerView ID
+        recyclerView = view.findViewById(R.id.recycler_view_vehicle2);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         carList = new ArrayList<>();
 
-        if (getArguments() != null) {
-            userIda = getArguments().getString(ARG_USER_ID);
+        if (userId != null) {
+            adapter = new CarAdapter(carList, requireContext(), userId,"O");
+            recyclerView.setAdapter(adapter);
+            fetchDataFromPHP();
         }
-        String U = userIda;
-        adapter = new CarAdapter(carList, requireContext(),U,"C");
-        recyclerView.setAdapter(adapter);
-
-
-
-        fetchDataFromPHP();
 
         return view;
     }
@@ -96,13 +106,16 @@ public class VehicleFragment extends Fragment {
                             jsonObject.getString("availableEnd"),
                             jsonObject.getInt("ownerId"),
                             jsonObject.getInt("availability")
-
                     );
                     carList.add(car);
                 }
 
                 // Update UI on the main thread
-                requireActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    if (isAdded()) {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

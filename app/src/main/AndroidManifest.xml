@@ -12,6 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Set SplashScreen as the launcher activity -->
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Other activities -->
+        <activity
+            android:name=".LastPross"
+            android:exported="false" />
+        <activity
+            android:name=".SummaryBuy"
+            android:exported="false" />
         <activity
             android:name=".StartBayActrivity"
             android:exported="false" />

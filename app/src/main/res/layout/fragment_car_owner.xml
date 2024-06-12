@@ -8,7 +8,7 @@
 
 
     <FrameLayout
-        android:id="@+id/framelayout"
+        android:id="@+id/framelayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_vehicle"
+                android:id="@+id/recycler_view_vehicle2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:paddingBottom="0dp"

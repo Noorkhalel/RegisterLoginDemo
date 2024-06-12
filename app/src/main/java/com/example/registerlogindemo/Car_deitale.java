@@ -45,6 +45,7 @@ public class Car_deitale extends AppCompatActivity {
     TextView year;
     RadioButton genderradioButton;
     RadioGroup radioGroup;
+    String iduser;
     TextView model;
 
     @Override
@@ -90,11 +91,15 @@ public class Car_deitale extends AppCompatActivity {
             VehicleId = b.getInt("getVehicleId");
             yerss = b.getInt("getYear");
             year.setText(String.valueOf(yerss));
+            iduser = getIntent().getStringExtra("getiduser");
+
+            iduser = getIntent().getStringExtra("getiduser");
+
             mudlem = b.getString("getModel");
             owner_idd = b.getInt("getOwnerId");
-            textView7.setText(mudlem);
-            textView8.setText(CarName);
-
+            textView7.setText(CarName);
+            textView8.setText(mudlem);
+            String aa = b.getString("usertyp");
             if(availability==1){
                 //
                 availableText.setText("Available");
@@ -107,6 +112,12 @@ public class Car_deitale extends AppCompatActivity {
                 availableText.setTextColor(Color.RED);
                 buttonBuy.setVisibility(View.GONE);
             }
+            if(aa.equals("C")){
+                buttonBuy.setVisibility(View.VISIBLE);
+            }else{
+                buttonBuy.setVisibility(View.GONE);
+            }
+
             ImageUrl = b.getString("getImageUrl");
             Glide.with(this)
                     .load(ImageUrl)
@@ -138,6 +149,8 @@ public class Car_deitale extends AppCompatActivity {
         intent.putExtra("getOwnerId", owner_idd);
         intent.putExtra("getVehicleId", VehicleId);
         intent.putExtra("getpons", pons);
+        intent.putExtra("getiduser", iduser);
+        intent.putExtra("getImageUrl", ImageUrl);
         startActivity(intent);
     }
 

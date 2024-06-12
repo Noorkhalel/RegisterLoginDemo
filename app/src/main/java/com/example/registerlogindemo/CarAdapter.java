@@ -15,15 +15,16 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
+
     private List<Car> carList;
     private Context context;
+    private String iduser,usertyp;
 
     public static class CarViewHolder extends RecyclerView.ViewHolder {
         public ImageView carImage;
         public TextView carName;
         public TextView carYear;
         public TextView carPrice;
-
         public TextView carModel;
         public TextView carAvailableStart;
         public TextView carAvailableEnd;
@@ -40,13 +41,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             carAvailableStart = itemView.findViewById(R.id.car_available_start);
             carAvailableEnd = itemView.findViewById(R.id.car_available_end);
             carOwnerId = itemView.findViewById(R.id.car_owner_id);
-            card = itemView.findViewById(R.id.card_view); //
+            card = itemView.findViewById(R.id.card_view);
         }
     }
 
-    public CarAdapter(List<Car> carList, Context context) {
+    public CarAdapter(List<Car> carList, Context context, String userId,String usertyp) {
         this.carList = carList;
         this.context = context;
+        this.iduser = userId;
+        this.usertyp=usertyp;
     }
 
     @NonNull
@@ -66,10 +69,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.carAvailableStart.setText(car.getAvailableStart());
         holder.carAvailableEnd.setText(car.getAvailableEnd());
         holder.carOwnerId.setText(String.valueOf(car.getOwnerId()));
+
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Car_deitale.class); // Assuming CarDetail is the correct class
+                Intent intent = new Intent(context, Car_deitale.class);
                 intent.putExtra("carName", car.getName());
                 intent.putExtra("getImageUrl", car.getImageUrl());
                 intent.putExtra("getYear", car.getYear());
@@ -80,10 +84,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 intent.putExtra("getOwnerId", car.getOwnerId());
                 intent.putExtra("getVehicleId", car.getVehicleId());
                 intent.putExtra("getavailability", car.getAvailability());
-
+                intent.putExtra("getiduser", iduser+"");
+                intent.putExtra("usertyp",usertyp);
                 context.startActivity(intent);
             }
         });
+
         // Load the image using Glide
         Glide.with(holder.itemView.getContext())
                 .load(car.getImageUrl())

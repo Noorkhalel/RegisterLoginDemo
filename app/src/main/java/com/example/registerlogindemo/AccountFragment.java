@@ -55,6 +55,7 @@ public class AccountFragment extends Fragment {
         if (getArguments() != null) {
             userIda = getArguments().getString(ARG_USER_ID);
         }
+
     }
 
     @Override
